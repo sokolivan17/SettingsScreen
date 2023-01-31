@@ -34,7 +34,7 @@ class ViewController: UIViewController {
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -75,13 +75,9 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        cell.textLabel?.text = labelText[indexPath.row]
-        cell.imageView?.image = cellImage[indexPath.row]
-        cell.imageView?.backgroundColor = cellImageColor[indexPath.row]
-        cell.imageView?.tintColor = .white
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
+        
+        return cell ?? UITableViewCell()
     }
 }
 
