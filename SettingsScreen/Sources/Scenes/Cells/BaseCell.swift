@@ -1,5 +1,5 @@
 //
-//  TableViewCell.swift
+//  BaseCell.swift
 //  SettingsScreen
 //
 //  Created by Ваня Сокол on 31.01.2023.
@@ -7,7 +7,9 @@
 
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class BaseCell: UITableViewCell {
+
+    static var identifierBaseCell = "BaseCell"
 
     // MARK: - Outlets
 
@@ -94,5 +96,12 @@ class TableViewCell: UITableViewCell {
         iconBackgroundView.backgroundColor = nil
         iconImage.image = nil
         settingName.text = nil
+    }
+
+    public func configure(model: SettingsOption) {
+        iconBackgroundView.backgroundColor = model.iconBackgroundColor
+        iconImage.image = model.icon
+        settingName.text = model.title
+        detailText.text = model.mode
     }
 }

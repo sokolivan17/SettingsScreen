@@ -7,13 +7,15 @@
 
 import UIKit
 
-class NotificationCell: TableViewCell {
+class NotificationCell: BaseCell {
+
+    static let identifierNotificationCell = "NotificationCell"
 
     // MARK: - Outlets
 
     private lazy var notificationView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9156391025, green: 0.30392766, blue: 0.2372845709, alpha: 1)
+//        view.backgroundColor = #colorLiteral(red: 0.9156391025, green: 0.30392766, blue: 0.2372845709, alpha: 1)
         view.layer.cornerRadius = 13
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -83,5 +85,11 @@ class NotificationCell: TableViewCell {
         iconImage.image = nil
         settingName.text = nil
         notificationLabel.text = nil
+    }
+
+    override public func configure(model: SettingsOption) {
+        super.configure(model: model)
+        notificationLabel.text = model.notificationNum
+        notificationView.backgroundColor = model.notificationBackgroundColor
     }
 }

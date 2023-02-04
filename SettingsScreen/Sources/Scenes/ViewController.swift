@@ -9,33 +9,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private lazy var labelText = [
-        "Уведомления",
-        "Звуки, тактильные сигналы",
-        "Фокусирование",
-        "Экранное время",
-    ]
-
-    private lazy var cellImage = [
-        UIImage(systemName: "bell.badge.fill"),
-        UIImage(systemName: "speaker.wave.3.fill"),
-        UIImage(systemName: "moon.fill"),
-        UIImage(systemName: "hourglass"),
-    ]
-
-    private lazy var cellImageColor = [
-        UIColor.systemRed,
-        UIColor.systemPink,
-        UIColor.systemIndigo,
-        UIColor.systemIndigo,
-    ]
+    var models = Section.getSettingsCell()
 
     // MARK: - Outlets
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(BaseCell.self, forCellReuseIdentifier: BaseCell.identifierBaseCell)
+        tableView.register(NotificationCell.self, forCellReuseIdentifier: NotificationCell.identifierNotificationCell)
+        tableView.register(SwitchCell.self, forCellReuseIdentifier: SwitchCell.identifierSwitchCell)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -69,16 +53,46 @@ class ViewController: UIViewController {
 // MARK: - Extension
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return models.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        labelText.count
+        return models[section].options.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-        cell?.iconBackgroundView.backgroundColor = cellImageColor[indexPath.item]
-        cell?.iconImage.image = cellImage[indexPath.item]
-        cell?.settingName.text = labelText[indexPath.item]
-        return cell ?? UITableViewCell()
+        let model = models[indexPath.section].options[indexPath.row]
+
+        switch model.typeCell {
+
+        case .staticCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: BaseCell.identifierBaseCell, for: indexPath) as? BaseCell
+            cell?.configure(model: model)
+            return cell ?? UITableViewCell()
+        case .switchCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: SwitchCell.identifierSwitchCell, for: indexPath) as? SwitchCell
+            cell?.configure(model: model)
+            return cell ?? UITableViewCell()
+        case .notificationCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NotificationCell.identifierNotificationCell, for: indexPath) as? NotificationCell
+            cell?.configure(model: model)
+            return cell ?? UITableViewCell()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let model = models[indexPath.section].options[indexPath.row]
+
+        switch model.typeCell {
+        case .staticCell:
+            print("Нажата ячейка \(model.title)")
+        case .switchCell:
+            print("Нажата ячейка \(model.title)")
+        case .notificationCell:
+            print("Нажата ячейка \(model.title)")
+        }
     }
 }
 
