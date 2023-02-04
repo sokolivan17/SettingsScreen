@@ -1,47 +1,29 @@
 //
-//  TableViewCell.swift
+//  NotificationCell.swift
 //  SettingsScreen
 //
-//  Created by Ваня Сокол on 31.01.2023.
+//  Created by Ваня Сокол on 04.02.2023.
 //
 
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class NotificationCell: TableViewCell {
 
     // MARK: - Outlets
 
-    lazy var iconBackgroundView: UIView = {
+    private lazy var notificationView: UIView = {
         let view = UIView()
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 5
-        view.layer.masksToBounds = true
+        view.backgroundColor = #colorLiteral(red: 0.9156391025, green: 0.30392766, blue: 0.2372845709, alpha: 1)
+        view.layer.cornerRadius = 13
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    lazy var iconImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    lazy var settingName: UILabel = {
+    private lazy var notificationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    lazy var detailText: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textAlignment = .left
-        label.textColor = .lightGray
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -65,7 +47,8 @@ class TableViewCell: UITableViewCell {
         addSubview(iconBackgroundView)
         addSubview(iconImage)
         addSubview(settingName)
-        addSubview(detailText)
+        addSubview(notificationView)
+        addSubview(notificationLabel)
     }
 
     private func setupLayout() {
@@ -82,8 +65,13 @@ class TableViewCell: UITableViewCell {
             settingName.leftAnchor.constraint(equalTo: iconBackgroundView.rightAnchor,constant: 10),
             settingName.centerYAnchor.constraint(equalTo: iconBackgroundView.centerYAnchor),
 
-            detailText.rightAnchor.constraint(equalTo: rightAnchor, constant: -40),
-            detailText.centerYAnchor.constraint(equalTo: iconBackgroundView.centerYAnchor),
+            notificationView.rightAnchor.constraint(equalTo: rightAnchor, constant: -50),
+            notificationView.centerYAnchor.constraint(equalTo: iconBackgroundView.centerYAnchor),
+            notificationView.heightAnchor.constraint(equalToConstant: 26),
+            notificationView.widthAnchor.constraint(equalToConstant: 26),
+
+            notificationLabel.centerXAnchor.constraint(equalTo: notificationView.centerXAnchor),
+            notificationLabel.centerYAnchor.constraint(equalTo: notificationView.centerYAnchor),
         ])
     }
 
@@ -94,5 +82,6 @@ class TableViewCell: UITableViewCell {
         iconBackgroundView.backgroundColor = nil
         iconImage.image = nil
         settingName.text = nil
+        notificationLabel.text = nil
     }
 }

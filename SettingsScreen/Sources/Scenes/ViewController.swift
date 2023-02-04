@@ -10,15 +10,15 @@ import UIKit
 class ViewController: UIViewController {
 
     private lazy var labelText = [
-        "Уведомление",
+        "Уведомления",
         "Звуки, тактильные сигналы",
         "Фокусирование",
         "Экранное время",
     ]
 
     private lazy var cellImage = [
-        UIImage(systemName: "bell.badge"),
-        UIImage(systemName: "speaker.wave.3"),
+        UIImage(systemName: "bell.badge.fill"),
+        UIImage(systemName: "speaker.wave.3.fill"),
         UIImage(systemName: "moon.fill"),
         UIImage(systemName: "hourglass"),
     ]
@@ -46,7 +46,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "Настройки"
-        navigationController?.navigationBar.prefersLargeTitles = false
         setupHierarchy()
         setupLayout()
     }
@@ -69,14 +68,16 @@ class ViewController: UIViewController {
 
 // MARK: - Extension
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         labelText.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-        
+        cell?.iconBackgroundView.backgroundColor = cellImageColor[indexPath.item]
+        cell?.iconImage.image = cellImage[indexPath.item]
+        cell?.settingName.text = labelText[indexPath.item]
         return cell ?? UITableViewCell()
     }
 }
