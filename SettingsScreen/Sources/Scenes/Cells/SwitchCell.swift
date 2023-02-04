@@ -7,7 +7,9 @@
 
 import UIKit
 
-class SwitchCell: TableViewCell {
+class SwitchCell: BaseCell {
+
+    static let identifierSwitchCell = "SwitchCell"
 
     // MARK: - Outlets
 
@@ -67,5 +69,9 @@ class SwitchCell: TableViewCell {
         iconImage.image = nil
         settingName.text = nil
         switching.isOn = false
+    }
+
+    override public func configure(model: SettingsOption) {
+        super.configure(model: model)
     }
 }
