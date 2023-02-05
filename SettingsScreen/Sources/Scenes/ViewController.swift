@@ -82,7 +82,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         let model = models[indexPath.section].options[indexPath.row]
 
         switch model.typeCell {
@@ -93,6 +92,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         case .notificationCell:
             print("Нажата ячейка \(model.title)")
         }
+
+        let viewController = DetailViewController()
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewController.models = model
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
