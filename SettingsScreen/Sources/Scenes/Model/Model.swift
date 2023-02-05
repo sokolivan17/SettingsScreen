@@ -26,7 +26,6 @@ enum SettingsType {
     case staticCell
     case switchCell
     case notificationCell
-
 }
 
 extension Section {
