@@ -30,7 +30,6 @@ enum SettingsType {
 
 extension Section {
     static func getSettingsCell() -> [Section] {
-
     return [
             Section(options: [
                 SettingsOption(
