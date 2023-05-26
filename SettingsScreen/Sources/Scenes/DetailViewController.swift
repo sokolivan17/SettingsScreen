@@ -53,6 +53,7 @@ class DetailViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         fillSettings()
+        backToRootViewController()
     }
 
     // MARK: - Setup
@@ -78,5 +79,11 @@ class DetailViewController: UIViewController {
             settingName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             settingName.topAnchor.constraint(equalTo: iconBackgroundView.bottomAnchor,constant: 20),
         ])
+    }
+
+    private func backToRootViewController() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
 }
